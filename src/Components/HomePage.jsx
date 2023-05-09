@@ -67,7 +67,7 @@ export default function HomePage() {
       })
       .catch((error) => {});
   };
-  const[isDisabled, setDisabled] = useState(false);
+ 
 
   const routeChange = () => {
     let LoginPage = "./LoginPage";
@@ -76,25 +76,15 @@ export default function HomePage() {
   return (
     <>
       {/* NAVBAR*/}
-      <Disclosure as="nav" className="bg-gray-800 ">
+      <Disclosure as="nav" className="bg-gray-800 mx-auto ">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-              <div className="relative flex h-16 items-center justify-between">
-                <div className="absolute inset-y-0 left-2 flex items-center sm:hidden">
-                  {/* Mobile menu button*/}
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                    <span className="sr-only">Open main menu</span>
-                    {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Disclosure.Button>
-                </div>
-                <div className="flex flex-1 h-8 items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="mx-auto max-w-7xl px-2 ">
+              <div className="relative flex  items-center justify-between">
+                
+                <div className="flex flex-1 h-8 gap-3 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 h-12 items-center">
-                    <h1 className="text-cyan-400 font-semibold">TVI</h1>
+                    <h1 className="text-sky-400 font-semibold">TVI</h1>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
@@ -116,7 +106,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                {/* <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <button
                     type="button"
                     className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -125,7 +115,7 @@ export default function HomePage() {
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
 
-                  {/* Profile dropdown */}
+                
                   <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -188,24 +178,41 @@ export default function HomePage() {
                         </Menu.Item>
                       </Menu.Items>
                     </Transition>
-                  </Menu>
+                              </Menu>
+                </div>*/} 
+                <div className="flex items-center">
+                  <div className="flex space-x-1">
+                    <input
+                      type="text"
+                      className="block w-full px-2 py-1 text-sky-700 bg-white border rounded-full focus:border-sky-700 focus:ring-sky-700 focus:outline-none focus:ring focus:ring-opacity-40"
+                      placeholder="Search..."
+                      />
+                      <Button className="px-2.5 py-2 text-white bg-sky-700 rounded-full outline-cyan-500">
+                        <svg
+                         xmlns="http://www.w3.org/2000/svg"
+                         className="w-5 h-5"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                         strokeWidth={2}
+                        ><path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                        </svg>
+                      </Button>
+                  </div>
                 </div>
                 <div className="flow-root">
                   <Button
                     type="button"
-                    className="m-3 flex flex-wrap rounded-full border-solid border-1 border-sky-900 outline-cyan-500"
+                    className="m-3 pt-3 py-2 flex flex-wrap rounded-full border-solid border-1 border-sky-900 outline-cyan-500"onClick={routeChange}
                   >
                     Login
                   </Button>
                 </div>
-                <div className="flow-root">
-                  <Button
-                    type="button"
-                    className=" flex flex-wrap rounded-full border-solid border-1 border-sky-900 outline-cyan-500"
-                  >
-                    Logout
-                  </Button>
-                </div>
+               
               </div>
             </div>
 
@@ -327,20 +334,24 @@ export default function HomePage() {
 
       {/* PLANES DISPONIBLES */}
 
-      <div className="bg-white py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl sm:text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-sky-700 sm:text-6xl">
+      <div className="bg-gray-200 p-24">
+      <h2 className="text-3xl font-bold tracking-tight text-sky-700 sm:text-6xl text-center">
               Planes Disponibles
             </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
+            <p className="mt-6 text-lg leading-8 text-gray-600 text-center">
               Distinctio et nulla eum soluta et neque labore quibusdam. Saepe et
               quasi iusto modi velit ut non voluptas in. Explicabo id ut
               laborum.
             </p>
-          </div>
-          <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
-            <div className="p-8 sm:p-10 lg:flex-auto">
+            
+        <div className="col-span-3  bg-gray-200 rounded-xl ">
+          <div className="mx-auto p-4 grid grid-cols-3 gap-5 sm:text-center">
+           
+        
+          
+          <div className="mx-auto mt-10 rounded-3xl ring-1 ring-gray-200  hover:bg-gray-300 bg-blue-300">
+            <div className="p-8  rounded-3xl sm:p-10 lg:flex-auto">
+            
               <h3 className="text-2xl font-bold tracking-tight text-gray-900">
                 Plan Personal
               </h3>
@@ -353,7 +364,7 @@ export default function HomePage() {
                 <h4 className="flex-none text-sm font-semibold leading-6 text-sky-600">
                   What’s included
                 </h4>
-                <div className="h-px flex-auto bg-gray-100" />
+                <div className="h-px flex-auto bg-white " />
               </div>
               <ul
                 role="list"
@@ -371,7 +382,7 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 bg-slate-300">
                 <div className="mx-auto max-w-xs px-8">
                   <p className="text-base font-semibold text-gray-600">
                     Pay once, own it forever
@@ -399,8 +410,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mx-auto mt-0 max-w-2xl rounded-2xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
-            <div className="p-8 sm:p-10 lg:flex-auto">
+          <div className=" mx-auto mt-10 rounded-3xl ring-1 ring-gray-200  hover:bg-gray-300 bg-blue-300">
+            <div className="p-8 sm:p-10 lg:flex-auto ">
               <h3 className="text-2xl font-bold tracking-tight text-gray-900">
                 Plan Familiar
               </h3>
@@ -431,7 +442,7 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 bg-slate-300">
                 <div className="mx-auto max-w-xs px-8">
                   <p className="text-base font-semibold text-gray-600">
                     Pay once, own it forever
@@ -459,7 +470,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mx-auto mt-0 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+          <div className="mx-auto mt-10 rounded-3xl ring-1 ring-gray-200  hover:bg-gray-300 bg-blue-300">
             <div className="p-8 sm:p-10 lg:flex-auto">
               <h3 className="text-2xl font-bold tracking-tight text-gray-900">
                 Plan Empresarial
@@ -491,7 +502,7 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 bg-slate-300">
                 <div className="mx-auto max-w-xs px-8">
                   <p className="text-base font-semibold text-gray-600">
                     Pay once, own it forever
@@ -518,6 +529,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
 

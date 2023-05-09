@@ -20,7 +20,7 @@ export default function LoginPage() {
     signInWithEmailAndPassword( auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      navigate("/")
+      navigate("/Dashboard")
       console.log(user);
     })
     .catch((error) => {
@@ -53,9 +53,9 @@ export default function LoginPage() {
               </label>
               <input
                 type="email"
-                className="block w-full px-4 py-2 mt-2 text-blue-700 
-                bg-white border rounded-md focus:border-blue-400 
-                focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full px-2 py-2 mt-2 text-blue-700 
+                bg-white border rounded-2xl  focus:border-blue-400 
+                focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40"
                 name="email"
                 required
                 placeholder="email@example"
@@ -71,9 +71,9 @@ export default function LoginPage() {
                 </label>
                 <input
                   type="password"
-                  className="block w-full px-4 py-2 mt-2 text-blue-700 
-                  bg-white border rounded-md focus:border-blue-400 
-                  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className="block w-full px-2 py-2 mt-2 
+                  bg-white border rounded-2xl  focus:border-blue-500 
+                  focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   name="password"
                   required
                   placeholder="Password"
