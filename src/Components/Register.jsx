@@ -7,7 +7,7 @@ import {
   } from "@material-tailwind/react";
 
 
-  
+
 export default function Register(){
     const onSubmit = async(e)=>{
         e.preventDefault()
@@ -17,6 +17,7 @@ export default function Register(){
         const user = userCredential.user;
         console.log(user);
         navigate("/LoginPage")
+        return userCredential;
     })
     .catch((error)=>{
         const errorCode = error.code;
@@ -25,7 +26,8 @@ export default function Register(){
         
     });
     }
-       
+ 
+
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -33,26 +35,24 @@ export default function Register(){
 
     return (
 <>
-<section>
-    <div>
-        <div>
-            <h1>Register</h1>
-            <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
+            <div className="top-0 left-0 h-full w-full relative flex justify-center min-h-screen overflow-hidden bg-center bg-cover bg-no-repeat bg-[url('https://wallpaperaccess.com/full/4028171.jpg')]">
+           
+                
+                <div className="w-full p-6 m-auto bg-opacity-70 bg-gray-400 rounded-md shadow-xl shadow-slate-700/60 ring ring-gray-400 lg:max-w-xl">
                 <div>
-                    <h3 className="text-4xl font-bold text-sky-500">TVI</h3>
+                    <h3 className="text-center mt-6 text-4xl font-bold text-sky-700">TVI</h3>
                 </div>
-                <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-neutral-400 shadow-md sm:max-w-lg sm:rounded-lg">
                 <form>
                     <div>
                         <label htmlFor="name"
-                        className="block text-sm font-medium text-gray-700 undefined"
+                        className="block text-sm font-medium text-gray-900 undefined"
                         >
                            Name
                         </label>
                         <div className="flex flex-col items-start">
                             <input
                             type="text"
-                            name="name"
+                            name="firstname"
                             
                             placeholder="Name"
                             className="block w-full mt-1 border-sky-300 rounded-md shadow-sm focus
@@ -64,14 +64,14 @@ export default function Register(){
 
                     <div>
                         <label htmlFor="name"
-                        className="block text-sm font-medium text-gray-700 undefined"
+                        className="block text-sm font-medium text-gray-900 undefined"
                         >
                             Last Name
                         </label>
                         <div className="flex flex-col items-start">
                             <input
                             type="text"
-                            name="name"
+                            name="lastname"
                             
                             placeholder="Last Name"
                             className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus
@@ -83,14 +83,15 @@ export default function Register(){
 
                     <div className="mt-4">
                         <label htmlFor="email"
-                            className="block text-sm font-medium text-gray-700 undefined">
+                            className="block text-sm font-medium text-gray-900 undefined">
                                 Email
                             </label>
 
                         <div className="flex flex-col items-start">
                             <input 
                                 type="email"
-                                name="email"
+                                id="email"
+                                name=""
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -103,13 +104,14 @@ export default function Register(){
                     <div className="mt-4">
                         <label 
                         htmlFor="password"
-                        className="block text-sm font-medium text-gray-700 undefined">
+                        className="block text-sm font-medium text-gray-900 undefined">
                             Password
                         </label>
                     <div className="flex flex-col items-start">
                         <input 
                             type="password"
-                            name="password"
+                            id="password"
+                            name=""
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
@@ -122,7 +124,7 @@ export default function Register(){
                     <div className="mt-4">
                         <label 
                         htmlFor="password"
-                        className="block text-sm font-medium text-gray-700 undefined">
+                        className="block text-sm font-medium text-gray-900 undefined">
                            Confirm Password
                         </label>
                     <div className="flex flex-col items-start">
@@ -145,7 +147,7 @@ export default function Register(){
                         focus:bg-sky-600" onClick={onSubmit}>Register</Button>
                     </div>
                 </form>
-                <div className="mt-4 text-gray-600">
+                <div className="mt-4 text-gray-900">
                     Already have an account ? {""}
                     <span>
                         <a className="text-sky-700 hover:underline" href="./LoginPage">
@@ -176,11 +178,7 @@ export default function Register(){
 
                 </div>
                 </div>
-               
-            </div>
-        </div>
-    </div>
-</section>
+               </div>
 </>
     );
 }

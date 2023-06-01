@@ -9,7 +9,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 
 const navigation = [
-  { name: "Novedades", href: "#", current: true },
+  { name: "Novedades", href: "#", current: false },
   { name: "Talleres Asociados", href: "#", current: false },
   { name: "Servicios", href: "#", current: false },
   { name: "Agendar Cita", href: "#", current: false },
@@ -83,7 +83,7 @@ export default function HomePage() {
               <div className="relative flex  items-center justify-between">
                 
                 <div className="flex flex-1 h-8 gap-3 items-center justify-center sm:items-stretch sm:justify-start">
-                  <div className="flex flex-shrink-0 h-12 items-center">
+                  <div className="flex flex-shrink-0  h-12 items-center">
                     <h1 className="text-sky-400 font-semibold">TVI</h1>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
@@ -94,8 +94,8 @@ export default function HomePage() {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? " text-white hover:bg-gray-700"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                              ? " text-white hover:bg-gray-700 no-underline"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white no-underline",
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
                           aria-current={item.current ? "page" : undefined}
@@ -300,7 +300,7 @@ export default function HomePage() {
         <div className="mx-auto  ">
           <h2 className="text-4xl font-bold text-white sm:text-6xl ">TVI</h2>
           <h3 className="text-white lg:mt-3 ">Quienes somos ?</h3>
-          <p className="mt-4 text-lg leading-8 text-white">
+          <p className="mt-4 text-lg leading-8 text-white ">
             Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
             lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
             fugiat aliqua.
@@ -373,7 +373,7 @@ export default function HomePage() {
                 {includedFeatures1.map((feature) => (
                   <li key={feature} className="flex gap-x-3">
                     <CheckIcon
-                      className="h-6 w-5 flex-none text-sky-600"
+                      className="h-6 w-5 flex-none text-green-700"
                       aria-hidden="true"
                     />
                     {feature}
@@ -433,7 +433,7 @@ export default function HomePage() {
                 {includedFeatures2.map((feature) => (
                   <li key={feature} className="flex gap-x-3">
                     <CheckIcon
-                      className="h-6 w-5 flex-none text-sky-600"
+                      className="h-6 w-5 flex-none text-green-700"
                       aria-hidden="true"
                     />
                     {feature}
@@ -493,7 +493,7 @@ export default function HomePage() {
                 {includedFeatures3.map((feature) => (
                   <li key={feature} className="flex gap-x-3">
                     <CheckIcon
-                      className="h-6 w-5 flex-none text-sky-600"
+                      className="h-6 w-5 flex-none text-green-700"
                       aria-hidden="true"
                     />
                     {feature}
