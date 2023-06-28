@@ -1,18 +1,18 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 
+
 const navigation = [
-  { name: "Novedades", href: "#", current: false },
-  { name: "Talleres Asociados", href: "#", current: false },
-  { name: "Servicios", href: "#", current: false },
-  { name: "Agendar Cita", href: "#", current: false },
+  { name: "Acerca de Nostros", href: "/AboutUs" },
+  { name: "Talleres Asociados", href: "/TalleresAsociados"  },
+  { name: "Nuestros Servicios", href: "/NuestrosServicios" },
+  { name: "Agendar Cita", href: "/AgendarCitas" },
 ];
 
 const stats = [
@@ -23,22 +23,23 @@ const stats = [
 ];
 
 const includedFeatures1 = [
+  "Maximo 1 vehiculo",
   "Registro de mantenimiento",
   "Asesoria",
-  "Maximo 2 vehiculos",
-  "Novedades",
+  
+ 
 ];
 const includedFeatures2 = [
+  "Maximo 3 vehiculos",
   "Registro de mantenimiento",
   "Asesoria",
-  "Maximo 4 vehiculos",
-  "Novedades",
+  
 ];
 const includedFeatures3 = [
+  "Ajustamos todo a la medida de tu necesidad",
   "Registro de mantenimiento",
   "Asesoria",
-  "Flotilla de la empresa",
-  "Novedades",
+
 ];
 
 function classNames(...classes) {
@@ -46,17 +47,6 @@ function classNames(...classes) {
 }
 
 export default function HomePage() {
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log("uid", uid);
-        
-      } else {
-        console.log("user is logged out");
-      }
-    });
-  }, []);
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -69,10 +59,12 @@ export default function HomePage() {
   };
  
 
-  const routeChange = () => {
+  const toLogin = () => {
     let LoginPage = "./LoginPage";
     navigate(LoginPage);
   };
+
+
   return (
     <>
       {/* NAVBAR*/}
@@ -80,28 +72,26 @@ export default function HomePage() {
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 ">
-              <div className="relative flex  items-center justify-between">
+              <div className="mx-auto relative flex  items-center justify-between">
                 
                 <div className="flex flex-1 h-8 gap-3 items-center justify-center sm:items-stretch sm:justify-start">
-                  <div className="flex flex-shrink-0  h-12 items-center">
-                    <h1 className="text-sky-400 font-semibold">TVI</h1>
+                  <div className="flex flex-shrink-0  h-10 items-center">
+                    <h1 className="text-sky-400 font-semibold">Car Trac</h1>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
-                        <a
+                        <NavLink 
                           key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current
-                              ? " text-white hover:bg-gray-700 no-underline"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white no-underline",
-                            "rounded-md px-3 py-2 text-sm font-medium"
-                          )}
-                          aria-current={item.current ? "page" : undefined}
+                          to={item.href}
+                          className={({isActive}) =>{ 
+                           return " text-white rounded-md px-3 py-2 text-sm font-medium no-underline" +
+                           (!isActive ?" text-white hover:bg-gray-700 no-underline" : " text-gray-300 hover:bg-gray-700 hover:text-white no-underline" )
+                           
+                          }}         
                         >
                           {item.name}
-                        </a>
+                        </NavLink>
                       ))}
                     </div>
                   </div>
@@ -180,7 +170,7 @@ export default function HomePage() {
                     </Transition>
                               </Menu>
                 </div>*/} 
-                <div className="flex items-center">
+                <div className="mx-auto flex items-center">
                   <div className="flex space-x-1">
                     <input
                       type="text"
@@ -205,11 +195,10 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="flow-root">
-                  <Button
-                    type="button"
-                    className="m-3 pt-3 py-2 flex flex-wrap rounded-full border-solid border-1 border-sky-900 outline-cyan-500"onClick={routeChange}
+                  <Button 
+                  className="m-3 pt-3 py-2 flex flex-wrap rounded-full border-solid border-1 border-sky-900 outline-cyan-500"onClick={toLogin}
                   >
-                    Login
+                    Log in ?
                   </Button>
                 </div>
                
@@ -275,7 +264,7 @@ export default function HomePage() {
       <svg
         viewBox="0 0 1097 845"
         aria-hidden="true"
-        className="absolute left-1/2 -top-52 -z-10 w-[68.5625rem] -translate-x-1/2 transform-gpu blur-3xl sm:top-[-28rem] sm:ml-16 sm:translate-x-0"
+        className="mx-auto absolute left-1/2 -top-52 -z-10  -translate-x-1/2 transform-gpu blur-3xl sm:top-[-28rem] sm:ml-16 sm:translate-x-0"
       >
         <path
           fill="url(#8ddc7edb-8983-4cd7-bccb-79ad21097d70)"
@@ -296,23 +285,19 @@ export default function HomePage() {
           </linearGradient>
         </defs>
       </svg>
-      <div className="mx-auto max-w-7xl lg:px-2 z-10 content-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="mx-auto  ">
-          <h2 className="text-4xl font-bold text-white sm:text-6xl ">TVI</h2>
-          <h3 className="text-white lg:mt-3 ">Quienes somos ?</h3>
+      <div className="">
+      <div className="mx-auto max-w-7xl lg:px-4 sm:my-auto  content-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-opacity-20 bg-gray-200 rounded-lg shadow-md shadow-slate-700/60  ring-gray-400 lg:max-w-6xl ">
+        <div className="mx-auto ">
+          <h3 className="mt-4 text-4xl font-bold text-white sm:text-4xl ">Car Trac</h3>
+          <br></br>
           <p className="mt-4 text-lg leading-8 text-white ">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-            fugiat aliqua.
-          </p>
-          <p className="mt-4 text-lg leading-8 text-white">
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum."
+          Somos Car Trac, la mejor alternativa para el cuidado y mantenimiento de tus vehículos,
+          ofrecemos un servicio completo de cuidado y mantenimiento de vehículos con la modalidad de Recogida y entrega, 
+          no tendrás que preocuparte por hacer filas, visitar talleres o perder tiempo valioso. 
+          Nuestro equipo de profesionales se encargará de cuidar de tu vehículo, mientras tú, simplemente continuas tu rutina, 
+          tan solo programa una cita a través de nuestra App y nuestro equipo vendrá a tu ubicación designada para recoger tu vehículo. 
+          Una vez que hayamos completado los servicios necesarios, te lo entregaremos de nuevo en el lugar que nos indiques. ¡Es así de sencillo!
+          También podrás consultar el histórico de tus mantenimientos y reparaciones desde tu móvil.
           </p>
         </div>
         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
@@ -331,38 +316,33 @@ export default function HomePage() {
           </dl>
         </div>
       </div>
-
+      </div>
       {/* PLANES DISPONIBLES */}
-
-      <div className="bg-gray-200 p-24">
+              
+      <div className="bg-gray-200 p-24 ">
       <h2 className="text-3xl font-bold tracking-tight text-sky-700 sm:text-6xl text-center">
               Planes Disponibles
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-600 text-center">
-              Distinctio et nulla eum soluta et neque labore quibusdam. Saepe et
-              quasi iusto modi velit ut non voluptas in. Explicabo id ut
-              laborum.
+              <h3>Conoce nuestros planes que tenemos para ofrecerte</h3>
             </p>
-            
+  
         <div className="col-span-3  bg-gray-200 rounded-xl ">
-          <div className="mx-auto p-4 grid grid-cols-3 gap-5 sm:text-center">
-           
+          <div className="mx-auto p-3 grid grid-cols-3 gap-5 sm:text-center">         
         
           
           <div className="mx-auto mt-10 rounded-3xl ring-1 ring-gray-200  hover:bg-gray-300 bg-blue-300">
             <div className="p-8  rounded-3xl sm:p-10 lg:flex-auto">
             
-              <h3 className="text-2xl font-bold tracking-tight text-gray-900">
+          {/*Plan personal*/}
+
+              <h1 className="text-3xl font-bold  text-grey-900">
                 Plan Personal
-              </h3>
-              <p className="mt-6 text-base leading-7 text-gray-600">
-                Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque
-                amet indis perferendis blanditiis repellendus etur quidem
-                assumenda.
-              </p>
+              </h1>
+            
               <div className="mt-10 flex items-center gap-x-4">
                 <h4 className="flex-none text-sm font-semibold leading-6 text-sky-600">
-                  What’s included
+                  Que incluye ?
                 </h4>
                 <div className="h-px flex-auto bg-white " />
               </div>
@@ -381,19 +361,21 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
-            <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 bg-slate-300">
+            <div className="mx-auto m-4 p-2 lg:max-w-md lg:flex-shrink-0">
+              <div className="rounded-3xl py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 bg-slate-300">
                 <div className="mx-auto max-w-xs px-8">
-                  <p className="text-base font-semibold text-gray-600">
-                    Pay once, own it forever
-                  </p>
+                
                   <p className="mt-6 flex items-baseline justify-center gap-x-2">
                     <span className="text-5xl font-bold tracking-tight text-gray-900">
-                      $10
+                      $25
                     </span>
                     <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
                       USD
                     </span>
+                    
+                  </p>
+                  <p className="text-base font-semibold  text-gray-700">
+                  Anuales
                   </p>
                   <a
                     href="#"
@@ -409,20 +391,21 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+          
+          {/*PLan Familiar */}
 
           <div className=" mx-auto mt-10 rounded-3xl ring-1 ring-gray-200  hover:bg-gray-300 bg-blue-300">
-            <div className="p-8 sm:p-10 lg:flex-auto ">
+            <div className="p-8  rounded-3xl sm:p-10 lg:flex-auto ">
+
               <h3 className="text-2xl font-bold tracking-tight text-gray-900">
                 Plan Familiar
               </h3>
               <p className="mt-6 text-base leading-7 text-gray-600">
-                Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque
-                amet indis perferendis blanditiis repellendus etur quidem
-                assumenda.
+                
               </p>
               <div className="mt-10 flex items-center gap-x-4">
                 <h4 className="flex-none text-sm font-semibold leading-6 text-sky-600">
-                  What’s included
+                  Que incluye ?
                 </h4>
                 <div className="h-px flex-auto bg-gray-100" />
               </div>
@@ -441,19 +424,20 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
-            <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 bg-slate-300">
+            <div className="mx-auto m-4 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
+              <div className="rounded-2xl py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 bg-slate-300">
                 <div className="mx-auto max-w-xs px-8">
-                  <p className="text-base font-semibold text-gray-600">
-                    Pay once, own it forever
-                  </p>
+                 
                   <p className="mt-6 flex items-baseline justify-center gap-x-2">
                     <span className="text-5xl font-bold tracking-tight text-gray-900">
-                      $20
+                      $55
                     </span>
                     <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
                       USD
                     </span>
+                  </p>
+                  <p className="text-base font-semibold text-gray-600">
+                    Anuales
                   </p>
                   <a
                     href="#"
@@ -471,18 +455,16 @@ export default function HomePage() {
           </div>
 
           <div className="mx-auto mt-10 rounded-3xl ring-1 ring-gray-200  hover:bg-gray-300 bg-blue-300">
-            <div className="p-8 sm:p-10 lg:flex-auto">
-              <h3 className="text-2xl font-bold tracking-tight text-gray-900">
+            <div className="p-8  rounded-3xl sm:p-10 lg:flex-auto">
+              <h3 className="text-3xl font-bold tracking-tight text-gray-900">
                 Plan Empresarial
               </h3>
               <p className="mt-6 text-base leading-7 text-gray-600">
-                Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque
-                amet indis perferendis blanditiis repellendus etur quidem
-                assumenda.
+              
               </p>
-              <div className="mt-10 flex items-center gap-x-4">
+              <div className="mt-10 flex items-center gap-x-6">
                 <h4 className="flex-none text-sm font-semibold leading-6 text-sky-600">
-                  What’s included
+                  Que incluye ?
                 </h4>
                 <div className="h-px flex-auto bg-gray-100" />
               </div>
@@ -501,19 +483,12 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
-            <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 bg-slate-300">
+            <div className="mx-auto m-4 p-2 lg:max-w-md lg:flex-shrink-0">
+              <div className="rounded-2xl  py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 bg-slate-300">
                 <div className="mx-auto max-w-xs px-8">
-                  <p className="text-base font-semibold text-gray-600">
-                    Pay once, own it forever
-                  </p>
-                  <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                    <span className="text-5xl font-bold tracking-tight text-gray-900">
-                      $100
-                    </span>
-                    <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
-                      USD
-                    </span>
+                 
+                  <p className="mt-6 flex items-baseline justify-center gap-x-2 text-2xl  font-semibold text-black-600">
+                   Ajustamos todo a la medida de tu necesidad para que tu negocio no se detenga
                   </p>
                   <a
                     href="#"
@@ -724,9 +699,9 @@ export default function HomePage() {
           </div>
         </div>
         <div class="bg-neutral-200 p-6 text-center dark:bg-neutral-700">
-          <span>© 2023 Copyright:</span>
+          <span>© 2023 Copyright: </span>
           <span class="font-semibold text-neutral-300 dark:text-neutral-400">
-            TVI
+            Car Trac
           </span>
         </div>
       </footer>

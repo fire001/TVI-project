@@ -1,51 +1,48 @@
 import React, {useState, useEffect} from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from '../firebase';
-import {
-    Button,
-  } from "@material-tailwind/react";
-
+import { Button} from "@material-tailwind/react";
+import {useAuth} from '../context/authContext';
+import { Alert } from "./Alert";
 
 
 export default function Register(){
-    const onSubmit = async(e)=>{
-        e.preventDefault()
-    await createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential)=>{
-        //Signed in
-        const user = userCredential.user;
-        console.log(user);
-        navigate("/LoginPage")
-        return userCredential;
-    })
-    .catch((error)=>{
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        
+   
+    const { signup } = useAuth();
+
+    const [user, setUser] = useState({
+      email: "",
+      password: "",
     });
-    }
- 
-
+  
+    const [error, setError] = useState("");
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [ConfirmPassword, setConfirmPassword] = useState('');
-
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setError("");
+      try {
+        await signup(user.email, user.password);
+        navigate("/LoginPage");
+      } catch (error) {
+        setError(error.message, error.code, error.undefined);
+        console.log(setError());
+      }
+    };
     return (
-<>
-            <div className="top-0 left-0 h-full w-full relative flex justify-center min-h-screen overflow-hidden bg-center bg-cover bg-no-repeat bg-[url('https://wallpaperaccess.com/full/4028171.jpg')]">
-           
-                
-                <div className="w-full p-6 m-auto bg-opacity-70 bg-gray-400 rounded-md shadow-xl shadow-slate-700/60 ring ring-gray-400 lg:max-w-xl">
-                <div>
-                    <h3 className="text-center mt-6 text-4xl font-bold text-sky-700">TVI</h3>
-                </div>
-                <form>
-                    <div>
-                        <label htmlFor="name"
-                        className="block text-sm font-medium text-gray-900 undefined"
+      <div className="top-0 left-0 h-full w-full relative flex justify-center min-h-screen overflow-hidden bg-center bg-cover bg-no-repeat bg-[url('https://wallpaperaccess.com/full/4028171.jpg')]">
+        
+        <div className="w-full max-w-xs m-auto text-black">
+          {error && <Alert message={error} />}
+    
+          <form
+            onSubmit={handleSubmit}
+            className="w-full p-6 m-auto bg-opacity-80 bg-gray-400 rounded-md shadow-xl shadow-slate-700/60 ring ring-gray-400 lg:max-w-xl"
+          >
+            <div className="mb-2">
+            <label htmlFor="name"
+                        className="block text-sky-900 text-md font-bold mb-2"
                         >
                            Name
                         </label>
@@ -55,107 +52,71 @@ export default function Register(){
                             name="firstname"
                             
                             placeholder="Name"
-                            className="block w-full mt-1 border-sky-300 rounded-md shadow-sm focus
-                             focus:border-sky-300 focus:ring focus:ring-sky-200 focus:ring-opacity-50">
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             
                             </input>
                         </div>
                     </div>
 
-                    <div>
-                        <label htmlFor="name"
-                        className="block text-sm font-medium text-gray-900 undefined"
-                        >
-                            Last Name
-                        </label>
-                        <div className="flex flex-col items-start">
-                            <input
-                            type="text"
-                            name="lastname"
-                            
-                            placeholder="Last Name"
-                            className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus
-                             focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+          <div className="mb-2">
+              <label htmlFor="name"
+                className="block text-sky-900 text-md font-bold mb-2"
+                    >
+                  Last Name
+              </label>
+              <div className="flex flex-col items-start">
+              <input
+              type="text"
+              name="lastname"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Last Name" 
+                  >
 
-                            </input>
-                        </div>
-                    </div>
+                </input>
+              </div>
 
-                    <div className="mt-4">
-                        <label htmlFor="email"
-                            className="block text-sm font-medium text-gray-900 undefined">
-                                Email
-                            </label>
-
-                        <div className="flex flex-col items-start">
-                            <input 
-                                type="email"
-                                id="email"
-                                name=""
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                placeholder="Email Address"
-                                className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                </input>
-                        </div>
-                    </div>
-
-                    <div className="mt-4">
-                        <label 
-                        htmlFor="password"
-                        className="block text-sm font-medium text-gray-900 undefined">
-                            Password
-                        </label>
-                    <div className="flex flex-col items-start">
-                        <input 
-                            type="password"
-                            id="password"
-                            name=""
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            placeholder="Ingrese una contraseña mayor de 6 caracteres"
-                            className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            />
-                    </div>
-                    </div>
-                    
-                    <div className="mt-4">
-                        <label 
-                        htmlFor="password"
-                        className="block text-sm font-medium text-gray-900 undefined">
-                           Confirm Password
-                        </label>
-                    <div className="flex flex-col items-start">
-                        <input 
-                            type="password"
-                            name="password"
-                            value={ConfirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                            placeholder="confirme su contraseña"
-                            className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            />
-                    </div>
-
-                    </div>
-                    <div className="flex items-center mt-4">
-                        <Button type="submit" className=" rounded-xl font-semibold w-full px-4 py-2 h-12 tracking-wide 
-                        text-white transition-colors duration-200 transform 
-                        bg-sky-700 hover:bg-sky-600 focus:outline-none 
-                        focus:bg-sky-600" onClick={onSubmit}>Register</Button>
-                    </div>
-                </form>
-                <div className="mt-4 text-gray-900">
-                    Already have an account ? {""}
-                    <span>
-                        <a className="text-sky-700 hover:underline" href="./LoginPage">
-                            Log in
-                        </a>
-                    </span>
-                </div>
-                <div className="flex items-center w-full my-4">
+              <label
+                htmlFor="email"
+                className="block text-sky-900 text-md font-bold mb-2"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="example@example.com"
+              />
+            </div>
+    
+            <div className="mb-4">
+              <label
+                htmlFor="password"
+                className="block text-sky-900 text-md font-bold mb-2"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="*************"
+              />
+            </div>
+         
+            <button className="flex items-center justify-center uppercase ml-16 transition-colors duration-200 transform 
+                    bg-sky-700 hover:bg-sky-600 focus:outline-none 
+                    focus:bg-sky-600 text-white font-bold py-2 px-8 rounded-lg focus:shadow-outline">
+              Registrar
+            </button>
+         
+          <p className="my-4 text-md flex justify-between px-6">
+            Ya tienes una cuenta?
+            <Link to="/LoginPage" className=" no-underline text-blue-700 hover:text-blue-900">
+              Login
+            </Link>
+          </p>
+          <div className="flex items-center w-full my-4">
                     <hr className="w-full"/>
                     <p className="px-3">OR</p>
                     <hr className="w-full"/>
@@ -177,8 +138,9 @@ export default function Register(){
                         </Button>
 
                 </div>
-                </div>
-               </div>
-</>
-    );
-}
+          </form>
+        </div>
+        </div>
+        
+      );
+    }
