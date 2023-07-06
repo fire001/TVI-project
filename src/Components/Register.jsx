@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from '../firebase';
 import { Button} from "@material-tailwind/react";
 import {useAuth} from '../context/authContext';
@@ -16,7 +15,7 @@ export default function Register(){
       password: "",
     });
   
-    const [error, setError] = useState("");
+    const [error, setError] = useState();
     const navigate = useNavigate();
   
     const handleSubmit = async (e) => {
@@ -26,19 +25,33 @@ export default function Register(){
         await signup(user.email, user.password);
         navigate("/LoginPage");
       } catch (error) {
-        setError(error.message, error.code, error.undefined);
-        console.log(setError());
+        console.log(error.code, error.message);
+        if (error.code === "auth/email-already-in-use") {
+                  setError("Este email ya esta en uso")
+                }else
+                if (error.code === "auth/internal-error"){
+                  setError("Correo invalido")
+                }else if
+                 (error.code === "auth/invalid-email") {
+                  setError("Correo invalido")
+                }
+                else if (error.code === "auth/invalid-password") {
+                  setError("Contraseña invalida")
+                }
+                else if (error.code === "auth/user-not-found") {
+                  setError("Usuario no encontrado")
+                }   
       }
     };
     return (
       <div className="top-0 left-0 h-full w-full relative flex justify-center min-h-screen overflow-hidden bg-center bg-cover bg-no-repeat bg-[url('https://wallpaperaccess.com/full/4028171.jpg')]">
         
-        <div className="w-full max-w-xs m-auto text-black">
+         <div className="w-full max-w-xs mt-44 text-orange justify-center items-center ">
           {error && <Alert message={error} />}
-    
+        </div>
           <form
             onSubmit={handleSubmit}
-            className="w-full p-6 m-auto bg-opacity-80 bg-gray-400 rounded-md shadow-xl shadow-slate-700/60 ring ring-gray-400 lg:max-w-xl"
+            className=" absolute bottom-28 flex flex-col w-full p-6 m-auto bg-opacity-80 bg-gray-400 rounded-md shadow-xl shadow-slate-700/60 ring ring-gray-400 lg:max-w-xl"
           >
             <div className="mb-2">
             <label htmlFor="name"
@@ -49,7 +62,7 @@ export default function Register(){
                         <div className="flex flex-col items-start">
                             <input
                             type="text"
-                            name="firstname"
+                            name="name"
                             
                             placeholder="Name"
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -104,13 +117,13 @@ export default function Register(){
               />
             </div>
          
-            <button className="flex items-center justify-center uppercase ml-16 transition-colors duration-200 transform 
+            <button className="flex items-center justify-center uppercase transition-colors duration-200 transform 
                     bg-sky-700 hover:bg-sky-600 focus:outline-none 
                     focus:bg-sky-600 text-white font-bold py-2 px-8 rounded-lg focus:shadow-outline">
               Registrar
             </button>
          
-          <p className="my-4 text-md flex justify-between px-6">
+          <p className="my-4 text-md flex justify-between px-24">
             Ya tienes una cuenta?
             <Link to="/LoginPage" className=" no-underline text-blue-700 hover:text-blue-900">
               Login
@@ -138,8 +151,9 @@ export default function Register(){
                         </Button>
 
                 </div>
+                
           </form>
-        </div>
+       
         </div>
         
       );

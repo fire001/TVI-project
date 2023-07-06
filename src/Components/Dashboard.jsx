@@ -5,7 +5,7 @@ import {RiDashboardFill, RiDashboard3Line, RiCheckboxBlankCircleFill } from "rea
 import {FcSettings} from "react-icons/fc"
 import {TfiMenuAlt} from "react-icons/tfi"
 import {CgProfile} from "react-icons/cg"
-import {FcFile} from "react-icons/fc"
+import {FcFile, FcCalendar} from "react-icons/fc"
 import {FcTodoList} from "react-icons/fc"
 import firebaseApp from "../firebase";
 import {getAuth, signOut, onAuthStateChanged} from "firebase/auth"
@@ -13,6 +13,7 @@ import { Link, NavLink, Router } from "react-router-dom";
 import {MdNotificationsActive} from "react-icons/md"
 import { Button, IconButton } from "@material-tailwind/react";
 import {useAuth} from "../context/authContext";
+import { Spinner } from 'react-bootstrap';
 
 
 const auth = getAuth();
@@ -29,16 +30,22 @@ export default function Dashboard(){
     }
     
     const {user, logout, loading} = useAuth();
+
     const handleLogout = async () => {
-        await logout();
-        navigate("/");
-    };
-    if (loading) return <button type="button" class="bg-indigo-500 ... justify-center items-center flex absolute text-lg" disabled>
-    <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
-      
-    </svg>
-    Processing...
-  </button>
+        try{
+            await logout();
+            navigate("/");
+    }
+    catch(error){
+        console.log(error);
+    }
+};
+if (loading) return <Spinner type="button" class="text-blue-500/10 ... justify-center items-center flex relative text-lg" >
+<svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+  
+</svg>
+Processing...
+</Spinner>
 
     return (
         <>
@@ -57,34 +64,34 @@ export default function Dashboard(){
         <nav>
         <ul>
                     <li>
-                        <a href="#"
+                        <Link to="/Dashboard"
                         className="text-xl flex items-center gap-3 hover:bg-gradient-to-r from-sky-500 to-sky-700  p-3 mt-4 text-white rounded-full transition-colors font-semibold no-underline"><RiDashboard3Line/>
                             Dashboard
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="./Perfil"
+                        <Link to="/Perfil"
                         className="text-xl flex items-center gap-3 hover:bg-gradient-to-r from-sky-500 to-sky-700  p-3 mt-4 text-white rounded-full transition-colors font-semibold no-underline"><CgProfile/>
                             Perfil
                         </Link>
                     </li>
                     <li>
-                        <a href="#" 
+                        <Link to="/Historial" 
                         className="text-xl flex items-center gap-3 hover:bg-gradient-to-r from-sky-500 to-sky-700  p-3 mt-4 text-white rounded-full transition-colors font-semibold no-underline"><FcFile/>
                             Historial
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#" 
+                        <Link to="/SolicitudServicios" 
                         className="text-xl flex items-center gap-3 hover:bg-gradient-to-r from-sky-500 to-sky-700  p-3 mt-4 text-white rounded-full transition-colors font-semibold no-underline"><FcTodoList/>
                             Solicitud de Servicios 
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#" 
-                        className="text-xl flex items-center gap-3 hover:bg-gradient-to-r from-sky-500 to-sky-700  p-3 mt-4 text-white rounded-full transition-colors font-semibold no-underline"><FcSettings/>
-                            Ajustes
-                        </a>
+                        <Link to="/Cita" 
+                        className="text-xl flex items-center gap-3 hover:bg-gradient-to-r from-sky-500 to-sky-700  p-3 mt-4 text-white rounded-full transition-colors font-semibold no-underline"><FcCalendar/>
+                            Haz tu cita
+                        </Link>
                     </li>
                     <div className="flex items-center w-full my-10">
                     <hr className="w-full text-white"/>
@@ -102,13 +109,13 @@ export default function Dashboard(){
         {/*Btn menu mobile*/}
         <button className ={`fixed text-3xl text-sky-300 mt-3 rounded-full ${showMenu ? "left-60": "left-1"} lg:hidden transition-all duration-300 z-50`} onClick={toggleMenu}><TfiMenuAlt/></button>
         {/*Content*/}
-        <main className="lg:pl-80">
+        <main className="lg:pl-80 ">
             {/*Header*/}
             <header className="fixed left-0 top-0 w-full p-6 flex justify-end  bg-sky-700 rounded-br-3xl">
                 
                     <ul className=" flex items-center gap-3">
 
-                     <div className="ring-1 ring-sky-500 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden object-cover bg-gray-100 rounded-full dark:bg-gray-400">EO</div>
+                     <div className=" sm:justify-center ring-1 ring-green-500 relative inline-flex items-center justify-center hover:shadow-xl shadow-green-600 w-12 h-12 overflow-hidden object-cover bg-gray-100 rounded-full bg-auto font-bold text-uppercase text-sky-700 text-2xl">{user.displayName}</div>
                         <span className="font-medium text-gray-600 dark:text-gray-300">{user.email}</span> 
                 
                         <li>
@@ -122,14 +129,17 @@ export default function Dashboard(){
             </header>
             {/*Main Content*/}
            
-            <div className="pt-28">
-                <h1 className="text-4xl tex-sky-400 mb-10 "></h1>
-                {/*Home content*/}
-            </div>
+           
         </main>
+       
         
         </div>
-        
+        <div className="bg-gray-100 h-screen w-full ">
+        <div className="flex pt-28 lg:ml-72 sm:justify-center">
+                <h1 className="text-2xl text-sky-700 ">Bienvenido: {user.displayName || user.email}</h1>
+                {/*Home content*/}
+            </div>
+            </div>
         </>
     );
 }

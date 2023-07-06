@@ -1,10 +1,8 @@
 
 import { useNavigate } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
 import {useAuth} from '../context/authContext';
 import React, { useState } from "react";
 import { auth } from "../firebase";
-import { signInWithEmailAndPassword, } from "firebase/auth";
 import { Link } from "react-router-dom";
 import "firebase/compat/firestore";
 import { Alert } from "./Alert";
@@ -25,8 +23,19 @@ export default function LoginPage() {
       await login(user.email, user.password);
       navigate("/Dashboard");
     } catch (error) {
-      setError(error.message, error.code, error.undefined);
-      console.log(setError());
+      console.log(error.code, error.message);
+      if (error.code === "auth/email-already-in-use") {
+                setError("Este email ya esta en uso")
+              }else if
+               (error.code === "auth/invalid-email") {
+                setError("Correo invalido")
+              }
+              else if (error.code === "auth/invalid-password") {
+                setError("Contraseña invalida")
+              }
+              else if (error.code === "auth/user-not-found") {
+                setError("Usuario no encontrado")
+              }   
     }
   };
 
@@ -44,7 +53,7 @@ export default function LoginPage() {
   };
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    if (!user.email) return setError("Write an email to reset password");
+    if (!user.email) return setError("Ingese su correo");
     try {
       await resetPassword(user.email);
       setError('We sent you an email. Check your inbox')
@@ -103,10 +112,10 @@ export default function LoginPage() {
             focus:bg-sky-600 text-white font-bold py-2 px-8 rounded-lg focus:shadow-outline"
             type="submit"
           >
-            Sign In
+            Log In
           </button>
-          <p className="my-3 text-md flex justify-between px-6">
-            <Link to="#"
+          <p className="my-3 text-md flex justify-between px-6 no-underline">
+            <Link to="#!"
             onClick={handleResetPassword}
           >
             Olvidaste tu contraseña?
@@ -115,10 +124,13 @@ export default function LoginPage() {
         </div>
         <p className=" text-md flex justify-between px-2">
         Don't have an account?
-        <Link to="/register" className="text-blue-700 hover:text-blue-900">
+        <Link to="/register" className=" no-underline text-blue-700 hover:text-blue-900">
           Register
         </Link>
       </p>
+
+      <button className="bg-sky-700 hover:bg-sky-600 text-white focus:shadow-outline rounded-lg font-bold focus:bg-sky-600  py-2 px-4 w-full" onClick={handleGoogleSignin}>Continue With Google</button>
+
       </form>
      
    

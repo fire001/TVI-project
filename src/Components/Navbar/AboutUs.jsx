@@ -9,18 +9,20 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-
-
-
-
 export default function AboutUs() {
   const [openNav, setOpenNav] = React.useState(false);
   const navigate = useNavigate();
-  
-const routeChange = () => {
-  let LoginPage = "./LoginPage";
-  navigate(LoginPage);
-};
+
+  const toLogin = () => {
+    let LoginPage = "/LoginPage";
+    navigate(LoginPage);
+  };
+
+ const toHome = () => {
+  let HomePage = "/";
+  navigate(HomePage);
+ };
+
  React.useEffect(() =>{
   window.addEventListener("resize",
   () => window.innerWidth >= 960 && setOpenNav(false));
@@ -35,15 +37,15 @@ const routeChange = () => {
 
     return (
 <>
-<Disclosure as="nav" className="bg-gray-800 mx-auto lg:block">
+<Disclosure as="nav" className="bg-gray-800 mx-auto flex flex-col sticky ">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-7xl px-2 ">
+            <div className="mx-auto max-w-7xl px-2  ">
               <div className="mx-auto relative flex  items-center justify-between ">
                 
                 <div className="flex flex-1 h-8 gap-3 items-center justify-center sm:items-stretch sm:justify-start ">
                   <div className="flex flex-shrink-0  h-10 items-center">
-                    <h1 className="text-sky-400 font-semibold">Car Trac</h1>
+                    <h1 type="button" className="text-sky-400 font-semibold" onClick={toHome}>Car Trac</h1>
                   </div>
                   <div className="hidden sm:ml-6 sm:block ">
                     <div className="flex space-x-4">
@@ -54,7 +56,7 @@ const routeChange = () => {
                           className={({isActive}) =>{ 
                            return " text-white rounded-md px-3 py-2 text-sm font-medium no-underline" +
                            (!isActive ?" text-white hover:bg-gray-700 no-underline" : " text-gray-300 hover:bg-gray-700 hover:text-white no-underline" )
-                           
+                          
                           }}         
                         >
                           {item.name}
@@ -91,8 +93,7 @@ const routeChange = () => {
                 <div className="flow-root">
                   <Button
                     type="button"
-                    className="m-3 pt-3 py-2 flex flex-wrap rounded-full border-solid border-1 border-sky-900 outline-cyan-500"onClick={routeChange}
-                  >
+                    className="m-3 pt-3 py-2 flex flex-wrap rounded-full border-solid border-1 border-sky-900 outline-cyan-500"onClick={toLogin}>
                     Login
                   </Button>
                 </div>
@@ -125,15 +126,16 @@ const routeChange = () => {
       </Disclosure>
 
       {/*all text*/}
-<div>
+
 <div class="mx-auto h-10 backdrop-blur-xl bg-white/30 bg-gradient-to-t from-sky-900 to-gray-800"></div>
-</div>
+
+<div></div>
 <div className=" top-0 left-0 h-full w-full relative flex justify-center min-h-screen overflow-hidden bg-center bg-cover bg-no-repeat bg-[url('https://wallpaperaccess.com/full/4028171.jpg')]">
-    <div className=" mx-auto max-w-7xl lg:px-4  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-opacity-90 bg-gray-500 rounded-lg shadow-md shadow-slate-700/60  ring-gray-400 lg:max-w-6xl ">
+    <div className="sm:flex-col mb-12 mx-auto max-w-6xl lg:px-4 justify-center items-center  relative top-4 overflow-y-auto bg-opacity-80 bg-gray-500 rounded-lg shadow-md shadow-slate-700/60  ring-gray-400  ">
         <div className="mx-auto  ">
-          <h3 className="text-4xl font-bold text-white sm:text-4xl  ">Car Trac</h3>
+          <h3 className="text-4xl font-bold text-white sm:text-4xl  ">Quienes somos ?</h3>
     <div className="">
-          <div className="mt-4 text-lg leading-8 text-white overscroll-y-auto w-full  h-full  ">
+          <div className="mt-4 text-xl tracking-normal leading-8 text-white overscroll-auto w-full  h-full  ">
           Somos Car Trac, la mejor alternativa para el cuidado y mantenimiento de tus vehículos. Nuestro objetivo es proporcionar comodidad y conveniencia a nuestros clientes al eliminar la necesidad de visitar talleres, hacer filas y lidiar con los inconvenientes asociados con el mantenimiento de vehículos.
         
           En Car Trac, entendemos lo ocupada que puede ser la vida moderna. Por eso, ofrecemos un servicio completo de cuidado y mantenimiento de vehículos directamente en la comodidad de tu hogar u oficina. No importa dónde te encuentres, estaremos encantados de ir hasta allí para brindarte nuestros servicios de alta calidad, una de nuestras características más destacadas es nuestro servicio de recogida y entrega. Sabemos que no siempre tienes el tiempo suficiente para llevar tu vehículo al taller. Con Car Trac, te olvidarás de esas preocupaciones. Simplemente programa una cita a través de nuestra App y nuestro equipo vendrá a tu ubicación designada para recoger tu vehículo. Una vez que hayamos completado los servicios necesarios, te lo entregaremos de nuevo en el lugar que nos indiques. ¡Es así de sencillo!
@@ -164,7 +166,9 @@ const routeChange = () => {
 Al elegir nuestros servicios, puedes evitar largas esperas en los talleres, perder tiempo valioso o lidiar con el estrés de las reparaciones. Nos encargamos de todo por ti para que puedas continuar con tus actividades diarias sin interrupciones. Tu vehículo estará en manos seguras y recibirás un servicio de calidad sin la necesidad de visitar físicamente un taller.
 <br>
 </br> 
-Conclusión: En resumen, nuestra empresa de cuidado y mantenimiento de vehículos a domicilio está aquí para ofrecerte comodidad, conveniencia y un servicio excepcional. Ya no tendrás que preocuparte por hacer filas, visitar talleres o perder tiempo valioso. Nuestro equipo de profesionales se encargará de cuidar de tu vehículo, sin importar su origen, mientras tú, simplemente continuas tu rutina. Confía en nosotros para mantener tu vehículo en excelentes condiciones sin las molestias habituales.
+<br>
+</br>
+En resumen, nuestra empresa de cuidado y mantenimiento de vehículos a domicilio está aquí para ofrecerte comodidad, conveniencia y un servicio excepcional. Ya no tendrás que preocuparte por hacer filas, visitar talleres o perder tiempo valioso. Nuestro equipo de profesionales se encargará de cuidar de tu vehículo, sin importar su origen, mientras tú, simplemente continuas tu rutina. Confía en nosotros para mantener tu vehículo en excelentes condiciones sin las molestias habituales.
           </div>
           </div>
         </div>
