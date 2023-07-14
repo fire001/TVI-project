@@ -115,7 +115,7 @@ Processing...
                 
                     <ul className=" flex items-center gap-3">
 
-                     <div className=" sm:justify-center ring-1 ring-green-500 relative inline-flex items-center justify-center hover:shadow-xl shadow-green-600 w-12 h-12 overflow-hidden object-cover bg-gray-100 rounded-full bg-auto font-bold text-uppercase text-sky-700 text-2xl">{user.displayName}</div>
+                     <div className=" sm:justify-center ring-1 ring-sky-500 relative inline-flex items-center justify-center hover:shadow-xl shadow-green-600 w-12 h-12 overflow-hidden object-cover bg-gray-100 rounded-full bg-auto font-bold text-uppercase text-sky-700 text-2xl">{user.displayName}</div>
                         <span className="font-medium text-gray-600 dark:text-gray-300">{user.email}</span> 
                 
                         <li>

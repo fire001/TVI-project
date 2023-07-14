@@ -48,6 +48,15 @@ function classNames(...classes) {
 
 export default function HomePage() {
 
+  const [openNav, setOpenNav] = React.useState(false);
+ 
+  React.useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setOpenNav(false)
+    );
+  }, []);
+
   const navigate = useNavigate();
   const handleLogout = () => {
     signOut(auth)
@@ -71,105 +80,31 @@ export default function HomePage() {
       <Disclosure as="nav" className="bg-gray-800 mx-auto ">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-7xl px-2 ">
-              <div className="mx-auto relative flex  items-center justify-between">
+            <div className="mx-auto lg:max-w-7xl  ">
+              <div className="mx-auto flex flex-wrap p-5 sm:flex-col md:flex-row items-center">
                 
                 <div className="flex flex-1 h-8 gap-3 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0  h-10 items-center">
                     <h1 className="text-sky-400 font-semibold">Car Trac</h1>
                   </div>
-                  <div className="hidden sm:ml-6 sm:block">
-                    <div className="flex space-x-4">
+                  <div className="sm:ml-6 ">
+                    <div className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
                       {navigation.map((item) => (
                         <NavLink 
-                          key={item.name}
-                          to={item.href}
-                          className={({isActive}) =>{ 
-                           return " text-white rounded-md px-3 py-2 text-sm font-medium no-underline" +
-                           (!isActive ?" text-white hover:bg-gray-700 no-underline" : " text-gray-300 hover:bg-gray-700 hover:text-white no-underline" )
-                           
-                          }}         
+                        key={item.name}
+                        to={item.href}
+                        className={({isActive}) =>{ 
+                        return " text-white rounded-md px-3 py-2 text-sm font-medium no-underline" +
+                        (!isActive ?" text-white hover:bg-gray-700 no-underline" : " text-gray-300 hover:bg-gray-700 hover:text-white no-underline" )                         
+                        }}         
                         >
-                          {item.name}
+                        {item.name}
                         </NavLink>
                       ))}
                     </div>
                   </div>
                 </div>
-                {/* <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
-                    type="button"
-                    className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-
-                
-                  <Menu as="div" className="relative ml-3">
-                    <div>
-                      <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://secure.gravatar.com/avatar/a152019380edc604c20f45312f7e9e19?s=250&d=mm&r=g"
-                          alt="white avatar"
-                        />
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Your Profile
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Settings
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Mi registro
-                            </a>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </Transition>
-                              </Menu>
-                </div>*/} 
+              
                 <div className="mx-auto flex items-center">
                   <div className="flex space-x-1">
                     <input
@@ -231,7 +166,7 @@ export default function HomePage() {
 
       {/* ABOUT US */}
       <div class="mx-auto h-10 backdrop-blur-xl bg-white/30 bg-gradient-to-t from-sky-900 to-gray-800"></div>
-
+      
       <img
         className="top-0 left-0 h-full w-full relative "
         src="https://wallpaperaccess.com/full/4028171.jpg"
@@ -285,9 +220,9 @@ export default function HomePage() {
           </linearGradient>
         </defs>
       </svg>
-      <div className="">
-      <div className="mx-auto max-w-7xl lg:px-4 sm:my-auto  content-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-opacity-20 bg-gray-200 rounded-lg shadow-md shadow-slate-700/60  ring-gray-400 lg:max-w-6xl ">
-        <div className="mx-auto ">
+      
+      <div className="my-auto max-w-7xl lg:px-4 sm:flex-col absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-opacity-20 bg-gray-200 rounded-lg shadow-md shadow-slate-700/60  ring-gray-400 lg:max-w-6xl ">
+        <div className="content-center ">
           <h3 className="mt-4 text-4xl font-bold text-white sm:text-4xl ">Car Trac</h3>
           <br></br>
           <p className="mt-4 text-lg leading-8 text-white ">
@@ -316,7 +251,7 @@ export default function HomePage() {
           </dl>
         </div>
       </div>
-      </div>
+      
       {/* PLANES DISPONIBLES */}
               
       <div className="bg-gray-200 p-24 ">
@@ -327,7 +262,7 @@ export default function HomePage() {
               <h3>Conoce nuestros planes que tenemos para ofrecerte</h3>
             </p>
   
-        <div className="col-span-3  bg-gray-200 rounded-xl ">
+        <div className="col-span-3 sm:flex-col flex bg-gray-200 rounded-xl ">
           <div className="mx-auto p-3 grid grid-cols-3 gap-5 sm:text-center">         
         
           

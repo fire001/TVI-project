@@ -1,18 +1,17 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {RiDashboardFill, RiDashboard3Line, RiCheckboxBlankCircleFill } from "react-icons/ri"
-import {FcSettings} from "react-icons/fc"
 import {TfiMenuAlt} from "react-icons/tfi"
 import {CgProfile} from "react-icons/cg"
 import {FcFile, FcCalendar} from "react-icons/fc"
 import {FcTodoList, FcUpload} from "react-icons/fc"
-import firebaseApp from "../../firebase";
 import {getAuth, signOut, onAuthStateChanged} from "firebase/auth"
 import { Link, NavLink, Router } from "react-router-dom";
 import {MdNotificationsActive} from "react-icons/md"
 import { Button, IconButton, button } from "@material-tailwind/react";
 import {useAuth} from "../../context/authContext";
+import {uploadFile} from '../../firebase';
 
 const auth = getAuth();
 
@@ -92,10 +91,10 @@ export default function Historial (){
                   
                   </div>
                   <li>
-                          <a href="#" 
+                          <Link to="#" 
                           className="text-xl flex items-center gap-3 hover:bg-gradient-to-r from-sky-500 to-sky-700  p-3 mt-4 text-white rounded-full transition-colors font-semibold no-underline" onClick={handleLogout}><RiDashboardFill/>
                               Cerrar Sesion
-                          </a>
+                          </Link>
                       </li>
                   </ul>
           </nav> 
@@ -109,7 +108,7 @@ export default function Historial (){
                   
                       <ul className=" flex items-center gap-3">
   
-                       <div className="ring-1 ring-green-400 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden object-cover bg-gray-100 rounded-full dark:bg-gray-400">{user.displayName}</div>
+                       <div className="ring-1 ring-sky-400 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden object-cover bg-gray-100 rounded-full dark:bg-gray-400">{user.displayName}</div>
                           <span className="font-medium text-gray-600 dark:text-gray-300">{user.email}</span> 
                   
                           <li>
@@ -130,42 +129,46 @@ export default function Historial (){
           </main>
           
           </div>
-            <div className="lg:flex flex-col left-72 relative sm:scroll-auto mt-2"><h2 className="text-2xl">Mi Historial</h2></div>
-          <div className="lg:flex flex-col lg:justify-center lg:items-center relative sm:scroll-auto mt-4 Text-xl ">
-          <table class="table-auto  w-8/12 h-72">
-  <thead className="gap-3">
+            <div className="lg:flex flex-col relative sm:scroll-auto mt-2 justify-center items-center"><h2 className="text-2xl">Mi Historial</h2></div>
+            
+            <div>
+                <input  className=" relative lg:flex ml-72 flex-row items-end justify-end " type="file" name="" id="" onChange={(e) => uploadFile(e.target.files[0])}>
+            {/*Subir Registro<IconButton className="text-2xl rounded-full relative lg:flex flex-row items-end justify-end gap-2 lg:right-10"><FcUpload/></IconButton>*/}
+            </input>
+            </div>
+          <div className="lg:flex flex-col  justify-center items-center relative sm:scroll-auto mt-4 Text-xl  ">
+          <table class="table-auto flex-row text-lg border-collapse border-slate-300">
+  <thead className="flex-col justify-center items-center">
     <tr>
-      <th>Vehículo</th>
-      <th>Fecha</th>
-      <th>KMS</th>
-      <th>Fotos</th>
-      <th>Registro</th>
-      <th className="gap-3">
-      Subir Registro<IconButton className=" text-xl rounded-full px-4 "><FcUpload/></IconButton>
-      </th>
+      <th className="bg-slate-300 border border-slate-600 lg:px-24">Vehículo</th>
+      <th className="bg-slate-300 border border-slate-600 lg:px-24">Fecha</th>
+      <th className="bg-slate-300 border border-slate-600 lg:px-24">KMS</th>
+      <th className="bg-slate-300 border border-slate-600 lg:px-24">Fotos</th>
+      <th className="bg-slate-300 border border-slate-600 lg:px-24">Registro</th>
+    
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Kia Sorento 2017</td>
-      <td>10/10/2022</td>
-      <td>5000 kms</td>
-      <td>Ver</td>
-      <td></td>
+    <tr >
+      <td className="border border-slate-600 px-2">Kia Sorento 2017</td>
+      <td className="border border-slate-600 px-2">10/10/2022</td>
+      <td className="border border-slate-600 px-2">5000 kms</td>
+      <td className="border border-slate-600 px-2">Ver</td>
+      <td className="border border-slate-600 px-2"></td>
     </tr>
     <tr>
-      <td>Kia Sorento 2017</td>
-      <td>10/11/2023</td>
-      <td>10,000 kms</td>
-      <td>Ver</td>
-      <td></td>
+      <td className="border border-slate-600 px-2">Kia Sorento 2017</td>
+      <td className="border border-slate-600 px-2">10/11/2023</td>
+      <td className="border border-slate-600 px-2">10,000 kms</td>
+      <td className="border border-slate-600 px-2">Ver</td>
+      <td className="border border-slate-600 px-2"></td>
     </tr>
     <tr>
-      <td>Kia Sorento 2017</td>
-      <td>10/10/2024</td>
-      <td>20,000 kms</td>
-      <td>Ver</td>
-      <td></td>
+      <td className="border border-slate-600 px-2">Kia Sorento 2017</td>
+      <td className="border border-slate-600 px-2">10/10/2024</td>
+      <td className="border border-slate-600 px-2">20,000 kms</td>
+      <td className="border border-slate-600 px-2">Ver</td>
+      <td className="border border-slate-600 px-2"></td>
     </tr>
   </tbody>
 </table>

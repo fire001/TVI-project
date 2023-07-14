@@ -16,11 +16,11 @@ export function AuthProvider({children}){
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const signup = (email, password) => 
-    createUserWithEmailAndPassword(auth, email, password);
+    const signup = (email, password, vehicle) => 
+    createUserWithEmailAndPassword(auth, email, password, vehicle);
     
-    const login = (email, password) => 
-    signInWithEmailAndPassword(auth, email, password);
+    const login = (email, password, vehicle) => 
+    signInWithEmailAndPassword(auth, email, password, vehicle);
 
     const logout = () => signOut(auth);
 

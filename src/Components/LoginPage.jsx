@@ -26,9 +26,6 @@ export default function LoginPage() {
       console.log(error.code, error.message);
       if (error.code === "auth/email-already-in-use") {
                 setError("Este email ya esta en uso")
-              }else if
-               (error.code === "auth/invalid-email") {
-                setError("Correo invalido")
               }
               else if (error.code === "auth/invalid-password") {
                 setError("Contraseña invalida")

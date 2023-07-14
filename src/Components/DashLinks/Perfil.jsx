@@ -15,10 +15,37 @@ import { Button, IconButton, button } from "@material-tailwind/react";
 import {useAuth} from "../../context/authContext";
 import { Spinner } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
+import {getFirestore, collection, addDoc, getDocs, doc, deleteDoc, getDoc, setDoc} from 'firebase/firestore';
 
 const auth = getAuth();
-
+const db = getFirestore();
 export default function Perfil() {
+
+  const profile = {
+    nombre:'',
+    direccion:'',
+    phone:'',
+    cedula:'',
+    vehiculo:'',
+    matricula:'',
+  }
+  const [usuario, setUsuario] = useState(profile)
+
+  const captInputs  = (e) =>{
+    const {name, value} = e.target;
+    setUsuario({...usuario, [name]:value})
+  }
+
+  const guardarDatos = async(e) =>{
+    e.preventDefault();
+    try {
+      await addDoc(collection())
+    }catch(error){
+      console.log(error);
+    }
+    setUsuario({...profile})
+  }
+
 
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -115,7 +142,7 @@ export default function Perfil() {
                 
                     <ul className=" flex items-center gap-3">
 
-                     <div className="ring-1 ring-green-400 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden object-cover bg-gray-100 rounded-full dark:bg-gray-400">{user.displayName}</div>
+                     <div className="ring-1 ring-sky-300 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden object-cover bg-gray-100 rounded-full dark:bg-gray-400">{user.displayName}</div>
                         <span className="font-medium text-gray-600 dark:text-gray-300">{user.email}</span> 
                 
                         <li>
@@ -140,14 +167,15 @@ export default function Perfil() {
         {/*Perfil*/}
     
     {/*Edit*/}
-      <button type="button" className="text-xl flex right-12 font-semibold p-1 justify-end items-end absolute sm:scroll-y-auto mt-2 rounded shadow-lg ring-1 shadow-orange-500 text-white hover:bg-orange-300 bg-orange-400" onClick={handleShow}>Editar
+      <button type="button" className="text-xl flex right-12 font-semibold p-1 justify-end items-end absolute sm:scroll-y-auto mt-2 rounded shadow-lg ring-1 shadow-sky-500 text-white hover:bg-sky-300 bg-sky-400" onClick={handleShow}>Editar
       </button>
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Editar Perfil</Modal.Title>
+          <Modal.Title>Editar Mi Perfil</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form  className="w-full p-8 m-auto bg-white-400 rounded-md shadow-md shadow-slate-700/60 ring ring-gray-100 lg:max-w-xl"
+          <form
+          className="w-full p-8 m-auto bg-white-400 rounded-md shadow-md shadow-slate-700/60 ring ring-gray-100 lg:max-w-xl" onSubmit={guardarDatos} 
           >
             <div className="mb-2">
             <label htmlFor="name"
@@ -159,8 +187,8 @@ export default function Perfil() {
                             <input
                             type="text"
                             name="name"
-                            
                             placeholder="Name"
+                            onChange={captInputs} value={usuario.name}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             
                             </input>
@@ -193,17 +221,34 @@ export default function Perfil() {
                  <div className="flex flex-col items-start">
                    <input
                    type="text"
-                   name="lastname"
+                   name="direccion"
+                   onChange={captInputs} value={usuario.direccion}
                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   placeholder="C/:" 
+                   placeholder="" 
                    >
 
                   </input>
                 </div>
               </div>
+              
+              <div className="mb-2">
+                <label htmlFor="name"
+                className="block text-sky-900 text-md font-bold mb-2"
+                    >
+                  Telefono
+                </label>
+                 <div className="flex flex-col items-start">
+                   <input
+                   type="tel"
+                   name="phone"
+                   onChange={captInputs} value={usuario.phone}
+                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   placeholder="" 
+                   >
 
-       
-
+                  </input>
+                </div>
+              </div>
 
               <label
                 htmlFor="email"
@@ -213,7 +258,7 @@ export default function Perfil() {
               </label>
               <input
                 type="email"
-                
+                name="email"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="example@example.com"
               />
@@ -228,7 +273,8 @@ export default function Perfil() {
               <div className="flex flex-col items-start">
               <input
               type="text"
-              name=""
+              name="vehiculo"
+              onChange={captInputs} value={usuario.vehiculo}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="" 
                   >
@@ -246,7 +292,8 @@ export default function Perfil() {
               <div className="flex flex-col items-start">
               <input
               type="text"
-              name=""
+              name="matricula"
+              onChange={captInputs} value={usuario.matricula}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="X-xxxxxx" 
                   >
@@ -267,25 +314,31 @@ export default function Perfil() {
           </button>
           </Modal.Footer>
       </Modal>
+
+      {/*Perfil*/}
  
      <div className="lg:flex flex-col lg:justify-center lg:items-center relative sm:scroll-auto mt-4  ">
   <div class="px-4 sm:justify-center">
-    <h3 class=" font-semibold leading-7 text-gray-900 text-xl ">Mi Perfil</h3>
+    <h3 class="font-semibold leading-7 text-gray-900 text-xl ">Mi Perfil</h3>
     <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500"></p>
   </div>
   <div class="mt-6 border-t border-gray-100">
     <dl class="divide-y divide-gray-100">
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">Nombre(s)</dt>
-        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{user.displayName}</dd>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{user.displayName || usuario.name}</dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium leading-6 text-gray-900">Apellido(s)</dt>
-        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Foster</dd>
+        <dt class="text-sm font-medium leading-6 text-gray-900">ID</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{user.uid}</dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">Direccion</dt>
-        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">C/ lorem impsum, #01, RD</dd>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{usuario.direccion}</dd>
+      </div>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Telefonos</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{usuario.phone}</dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">Cedula</dt>
@@ -300,15 +353,15 @@ export default function Perfil() {
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">$0</dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium leading-6 text-gray-900">Vehículo</dt>
-        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Kia sorento 2017</dd>
+        <dt class="text-sm font-medium leading-6 text-gray-900">Vehículo(s)</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{usuario.vehiculo}</dd>
         <dt class="text-sm font-medium leading-6 text-gray-900">Matricula</dt>
-        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">A-xxxxxx</dd>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">A-xxxxxx{usuario.matricula}</dd>
       </div>
       <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm font-medium leading-6 text-gray-900">Historial de mantenimientos</dt>
         <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-          <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+          <ul class="divide-y divide-gray-100 rounded-md border border-gray-200">
             <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
               <div class="flex w-0 flex-1 items-center">
                 <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

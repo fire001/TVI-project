@@ -10,9 +10,13 @@ export default function Register(){
    
     const { signup } = useAuth();
 
+  
+   
+
     const [user, setUser] = useState({
       email: "",
       password: "",
+      
     });
   
     const [error, setError] = useState();
@@ -63,7 +67,7 @@ export default function Register(){
                             <input
                             type="text"
                             name="name"
-                            
+                         
                             placeholder="Name"
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             
@@ -81,6 +85,7 @@ export default function Register(){
               <input
               type="text"
               name="lastname"
+            
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Last Name" 
                   >
@@ -116,6 +121,9 @@ export default function Register(){
                 placeholder="*************"
               />
             </div>
+
+            
+         
          
             <button className="flex items-center justify-center uppercase transition-colors duration-200 transform 
                     bg-sky-700 hover:bg-sky-600 focus:outline-none 
