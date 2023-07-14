@@ -81,7 +81,7 @@ export default function HomePage() {
         {({ open }) => (
           <>
             <div className="mx-auto lg:max-w-7xl  ">
-              <div className="mx-auto flex flex-wrap p-5 sm:flex-col md:flex-row items-center">
+              <div className="mx-auto flex flex-wrap p-3 sm:flex-col md:flex-row items-center">
                 
                 <div className="flex flex-1 h-8 gap-3 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0  h-10 items-center">
